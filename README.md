@@ -39,24 +39,24 @@ The most important hyperparameter is the type of probe: MLPs, Random Fourier Fea
 ## Train set of probes
 We use [liftoff](https://github.com/tudor-berariu/) to generate config files for different runs, and for managing a queue of experiments.
 
-First we create a set of config files, each of for training one probe. We define in ```../configs/betaVAE/default.yaml``` the default parameters used in all experiments of a set, and in ```../configs/betaVAE/config.yaml``` the hyperparameters that we vary. 
+First we create a set of config files, each of for training one probe. We define in ```../configs/random_forest/default.yaml``` the default parameters used in all experiments of a set, and in ```../configs/random_forest/config.yaml``` the hyperparameters that we vary. 
 
 ```sh
-liftoff-prepare ../configs/betaVAE/ --runs-no 10 --results-path results/ --do
+liftoff-prepare ../configs/random_forest/ --runs-no 1 --results-path results/ --do
 ```
-The previous command creates 10 runs (10 different seeds) for each hyperparameter configuration defined in ../configs/betaVAE/config.yaml and save them in a results folder.
+The previous command creates 10 runs (10 different seeds) for each hyperparameter configuration defined in ../configs/random_forest/config.yaml and save them in a results folder.
 
 We run all experiments in the queue using the command:
 ```sh
-liftoff train_probe_clean .py  ./results/date_betaVAE/  --gpus 0 --per-gpu 8 --procs-no 8
+liftoff train_probe.py  ./results/date_random_forest/  --gpus 0 --per-gpu 4 --procs-no 4
 ```
-The previous command starts 8 runs in paralel on one GPU.
+The previous command starts 4 runs in paralel on one GPU.
 
 
 ## Compute Explicitness score
 After we have trained all probes of a certain type, we can compute the DCI-E scores using the following script:
 ```sh
-python simple_gather.py --results_dir=results/date_betaVAE
+python simple_gather.py --results_dir=results/date_random_forest
 ```
 
 ## In this repo we make use of the following projects:
