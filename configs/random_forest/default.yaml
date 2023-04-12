@@ -1,0 +1,84 @@
+name: pretrained
+
+######################### dataset parameters #########################
+# dataset containing images and original targets
+dataset: mpi3d # dsprites / shapes3d / mpi3d
+dataset_path: ./data/disent_indommain/
+
+cached_representations: True
+# dataset containing extracted reprentations and processed targets
+representation_dataset_path: ./representations_models/betaVAE
+representation_dataset_name: mpi3d_vae_pretrained_dataset
+num_workers: 2
+
+seed: 1
+log_interval: 10 # log every N batches
+save_model: True
+######################### model parameters #########################
+# model used for obtaining the representations chose from 
+model_type: vae  # vae / resnet18 / raw_data
+supervision: False
+pretrained: True
+save_representation_datasets: True
+
+probe:
+  type: RandomForest # MLP / RFF / RandomForest
+  data_fraction: 1.0
+
+  # Random Forest hyperparameters
+  max_leaf_nodes: None
+  max_depth: 8
+  num_trees: 100
+
+  # MLP hyperparameters
+  hidden_layers: 2
+  hidden_dim: 1024
+  lr: 0.004
+  weight_decay: 0.0
+  use_norm: False
+  use_dropout: False
+  epochs: 100
+  batch_size: 128
+  gamma: 0.1
+  optim_steps: [0.4, 0.8]
+
+  # RFF hyperparameters
+  rff_sigma_gain: 1.0
+  rff_sigma_scale: 'const'
+  rf_lr: 0.1
+
+
+vae:
+  model_params:
+    name: 'BetaVAE'
+    in_channels: 3
+    latent_dim: 10
+    loss_type: 'H'
+    beta: 1.
+    recons_type: 'bce'
+    model_type: 'big' # small / big
+
+  data_params:
+    data_path: "Data/"
+    train_batch_size: 64
+    val_batch_size:  64
+    patch_size: 64
+    num_workers: 4
+
+
+  exp_params:
+    LR: 0.002
+    weight_decay: 0.0
+    scheduler_gamma: 0.95
+    kld_weight: 16.0
+    manual_seed: 1265
+
+  trainer_params:
+    gpus: [0]
+    max_epochs: 30
+
+  logging_params:
+    save_dir: "logs/"
+    name: 'VAE'
+
+

@@ -1,0 +1,16 @@
+
+dataset: [mpi3d]
+vae: 
+  exp_params:
+    kld_weight: [16.0]
+
+  model_params:
+    latent_dim: [10]
+
+model_type: [vae]
+
+
+probe:
+  data_fraction: [1.0]
+  type: [RandomForest]
+  max_depth:  [1, 2, 3, 4, 8, 10, 12, 14, 16, 18, 20, 32]

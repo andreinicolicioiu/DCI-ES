@@ -1,0 +1,18 @@
+
+dataset: [mpi3d]
+vae: 
+  exp_params:
+    kld_weight: [16.0]
+
+  model_params:
+    latent_dim: [10]
+
+
+model_type: [vae]
+
+
+probe:
+  epochs: [10]
+  hidden_dim:  [0, 14, 21, 28, 33, 47, 75, 103, 131,  243, 467, 915, 1811, 3603]
+  lr: [0.0002]
+
