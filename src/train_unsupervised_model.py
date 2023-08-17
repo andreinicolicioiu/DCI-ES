@@ -17,23 +17,11 @@ from pytorch_lightning.plugins import DDPPlugin
 from liftoff import parse_opts
 from pathlib import Path
 
-# -------
-# import sys
-# sys.path.insert(0, './../InDomainGeneralizationBenchmark/src/')
-# import lablet_generalization_benchmark.evaluate_model as evaluate_model
-# import lablet_generalization_benchmark.load_dataset as load_dataset
-# import lablet_generalization_benchmark.model as models
-# from loss_capacity.models import ConvNet, NoisyLabels, LinearMixLabels, RawData, ResNet18
-# from loss_capacity.train_model import train_test_model
-# from loss_capacity.probing import Probe
 # datasets and evals
-
-
-
 import InDomainGeneralizationBenchmark.src.lablet_generalization_benchmark.evaluate_model as evaluate_model
 import InDomainGeneralizationBenchmark.src.lablet_generalization_benchmark.load_dataset as load_dataset
 # models
-from loss_capacity.models import ConvNet, NoisyLabels, LinearMixLabels, RawData, ResNet18
+from loss_capacity.models import ConvNet, RawData, ResNet18
 from loss_capacity.train_model import train_test_model
 from loss_capacity.utils import list2tuple_, config_to_string, save_representation_dataset
 from loss_capacity.probing import Probe
@@ -63,9 +51,6 @@ def run(params):
     # For reproducibility
     seed_everything(config.exp_params.manual_seed * params.run_id, True)
 
-    # TODO: maybe do smt more generic
-    # model = vae_models[config.model_params.name](**configmodel_params)
-
     if config.model_params.model_type == 'small':
         model = SmallBetaVAE(**config.model_params.__dict__)
     elif config.model_params.model_type == 'big':
@@ -74,15 +59,6 @@ def run(params):
     experiment = VAEXperiment(model,
                             config.exp_params)
 
-    # if restore:
-    #     ckpt = params.out_dir + '/BetaVAE/version_0/checkpoints/last.ckpt'
-    #     print(f'loading from: {ckpt}')
-    #     lightning_ckpt = torch.load(ckpt)
-    #     experiment.load_state_dict(lightning_ckpt['state_dict'])
-
-
-    # number_of_channels = 1 if params.dataset == 'dsprites' else 3
-    # print(f'number_of_channels: {number_of_channels}')
     imagenet_normalise = True if 'resnet' in params.model_type else False
     dataloader_train = load_dataset.load_dataset(
         dataset_name=params.dataset,  # datasets are dsprites, shapes3d and mpi3d

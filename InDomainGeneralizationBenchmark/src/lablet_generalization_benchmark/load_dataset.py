@@ -8,7 +8,6 @@ import numpy as np
 import sklearn.utils.extmath
 import torch.utils.data
 import torchvision.transforms
-import pdb
 
 class IndexManger(object):
     """Index mapping from features to positions of state space atoms."""
@@ -98,7 +97,6 @@ class BenchmarkDataset(torch.utils.data.Dataset):
 
         def load_data(filename):
             if not os.path.exists(filename):
-                pdb.set_trace()
                 if 'val' not in filename:
                     print(f'{filename} does not exist. try to downsload ... ')
                     self.download_dataset(filename)
@@ -106,7 +104,6 @@ class BenchmarkDataset(torch.utils.data.Dataset):
                     # we must create a validation set from the training set
                      # if 'train' in images_filename:
                     # split train in train and val sets
-                    pdb.set_trace()
                     from sklearn.model_selection import train_test_split
 
                     val_split_name_images = os.path.join(dataset_path, "{}_{}_{}_images.npz".format(dataset_name, variant, 'val'))
@@ -329,7 +326,6 @@ class LabelsDataset(torch.utils.data.Dataset):
 
         def load_data(filename):
             if not os.path.exists(filename):
-                pdb.set_trace()
                 if 'val' not in filename:
                     print(f'{filename} does not exist. try to downsload ... ')
                     self.download_dataset(filename)
@@ -337,7 +333,6 @@ class LabelsDataset(torch.utils.data.Dataset):
                     # we must create a validation set from the training set
                      # if 'train' in images_filename:
                     # split train in train and val sets
-                    pdb.set_trace()
                     from sklearn.model_selection import train_test_split
 
                     val_split_name_images = os.path.join(dataset_path, "{}_{}_{}_images.npz".format(dataset_name, variant, 'val'))

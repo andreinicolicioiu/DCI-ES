@@ -50,8 +50,7 @@ class Explitcitness():
             # this is used in the iclr paper. we assume l* = 0
             max_area = (max_x - min_x) * self.baseline_losses[i] 
             E = compute_explitcitness(self.curves[i][0], self.curves[i][1], 
-                global_max_area = max_area,
-                baseline_loss=self.baseline_losses[i],
+                max_area = max_area,
                 name=name,
                 debug=debug
                 )
@@ -60,11 +59,9 @@ class Explitcitness():
         return all_E
 
 
-def compute_explitcitness(x,y, max_area=None, max_x = None, min_x=None, baseline_loss = 1.0, name='',
-        debug=False):
+def compute_explitcitness(x,y, max_area=None, name='', debug=False):
     x = np.array(x)
     y = np.array(y)
-
     min_y_index = np.argmin(y)
     min_y = y[min_y_index]
 
@@ -75,5 +72,4 @@ def compute_explitcitness(x,y, max_area=None, max_x = None, min_x=None, baseline
     E = 2 * area_under / max_area
     E = E.sum()
     E = 1.0 - E
-
     return E
