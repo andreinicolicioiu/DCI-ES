@@ -169,7 +169,7 @@ def run(params):
                     data_fraction=params.probe.data_fraction,
                     use_sage=False
                     )
-            
+            num_probe_params = 0 # dummy, there are no learnable parameters in random-forrest
             probe_test_loss = 0
     else:
         if os.path.exists(ckeckpoint_path):

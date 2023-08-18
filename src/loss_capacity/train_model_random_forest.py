@@ -169,7 +169,7 @@ def train_test_random_forest(
     for i, name in enumerate(factor_names):
         print(f'{name}: {all_rsquared_val[i]}')
 
-    capacity = max_depth if max_depth is not None else -10#max_leaf_nodes 
+    capacity = max_depth if max_depth is not None else -10 #max_leaf_nodes 
 
     for i in range(10):
         tb_writer.add_scalar(f'{train_name}-rsquared_acc/train', all_rsquared_train.mean(), capacity+i)

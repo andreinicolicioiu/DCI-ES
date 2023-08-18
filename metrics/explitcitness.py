@@ -3,12 +3,10 @@ import pdb
 
 
 class Explitcitness():
-    def __init__(self, mode='baseline'):
+    def __init__(self):
         self.curves = []
         self.curves_names = []
         self.baseline_losses = []
-
-        self.mode = mode
     def add_curve(self, x,y, baseline_loss=1.0, name='curve'):
         x = np.array(x)
         y = np.array(y)
